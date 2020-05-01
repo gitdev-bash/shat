@@ -3,11 +3,11 @@
 # license WTFPL
 # Check for dependency
 check_nc=$(which nc)
-[ -z "$check_nc" ] && echo "You don`t have nc installed.Install nc and try again" && c1="false" || c1="true"
+[ -z "$check_nc" ] && echo "You don't have nc installed.Install nc and try again" && c1="false" || c1="true"
 check_nmap=$(which nmap)
-[ -z "$check_nmap" ] && echo "You don`t have nmap installed.Install nmap and try again" && c2="false" || c2="true"
+[ -z "$check_nmap" ] && echo "You don't have nmap installed.Install nmap and try again" && c2="false" || c2="true"
 check_openssl=$(which openssl)
-[ -z "$check_openssl" ] && echo "You don`t have openssl installed.Install openssl and try again" && c3="false" || c3="true"
+[ -z "$check_openssl" ] && echo "You don't have openssl installed.Install openssl and try again" && c3="false" || c3="true"
 [ "$c1" == "true" ] && exit; [ "$c2" == "true" ] && exit; [ "$c3" == "true" ] && exit
 port="31415"
 ip="$1"
