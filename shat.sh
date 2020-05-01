@@ -5,17 +5,17 @@
 port=31415
 ip="$1"
 name="$USER"
-export passwordshat=salut
+read -s passwordshat
 
 
 txt=Connected
 
 encrypt () {
-    echo -e  "\e[34m$name\e[0m: $1" | openssl enc -aes-256-cbc -a -salt -in /dev/stdin -out /dev/stdout -pass env:passwordshat | sed ':a;N;$!ba;s/\n/;/g'
+    echo -e  "\e[34m$name\e[0m: $1" | openssl enc -aes-256-cbc -a -salt -in /dev/stdin -out /dev/stdout -pass $passwordshat | sed ':a;N;$!ba;s/\n/;/g'
 }
 
 decrypt () {
-    sed 's/;/\n/g' <<<"$1" | openssl enc -aes-256-cbc -d -a -in /dev/stdin -out /dev/stdout -pass env:passwordshat
+    sed 's/;/\n/g' <<<"$1" | openssl enc -aes-256-cbc -d -a -in /dev/stdin -out /dev/stdout -pass $passwordshat
 }
 
 export -f decrypt
