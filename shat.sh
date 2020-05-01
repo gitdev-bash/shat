@@ -2,20 +2,20 @@
 # Simple encrypted network chat
 # license WTFPL
 
-port=31415
+port="31415"
 ip="$1"
 name="$USER"
-export passwordshat=salut
+read -s "enter password" pass
+#enter password
 
-
-txt=Connected
+txt="$USER has joined"
 
 encrypt () {
-    echo -e  "\e[34m$name\e[0m: $1" | openssl enc -aes-256-cbc -a -salt -in /dev/stdin -out /dev/stdout -pass env:passwordshat | sed ':a;N;$!ba;s/\n/;/g'
+    echo -e  "\e[34m$name\e[0m: $1" | openssl enc -aes-256-cbc -a -salt -in /dev/stdin -out /dev/stdout -pass $pass | sed ':a;N;$!ba;s/\n/;/g'
 }
 
 decrypt () {
-    sed 's/;/\n/g' <<<"$1" | openssl enc -aes-256-cbc -d -a -in /dev/stdin -out /dev/stdout -pass env:passwordshat
+    sed 's/;/\n/g' <<<"$1" | openssl enc -aes-256-cbc -d -a -in /dev/stdin -out /dev/stdout -pass $pass
 }
 
 export -f decrypt
@@ -24,7 +24,7 @@ open=$(nmap -sT $ip -p $port  | grep "$port/tcp.*open")
 
 if [ "$open" ]
 then
-    while true;
+    while [ true ];
     do
         encrypt "$txt"
         read txt
